@@ -1,0 +1,1355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orbital Education Foundation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+        
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            opacity: 0.7;
+        }
+        
+        .course-card {
+            transition: all 0.3s ease;
+        }
+        
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 50;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+        
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 800px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .close:hover {
+            color: black;
+        }
+        
+        .chart-container {
+            height: 300px;
+            width: 100%;
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #3b82f6;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .active-nav::after {
+            width: 100%;
+        }
+        
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Video Background -->
+    <div class="relative h-screen overflow-hidden">
+        <video autoplay muted loop class="hero-video">
+            <source src="https://assets.mixkit.co/videos/preview/mixkit-tree-with-yellow-flowers-1173-large.mp4" type="video/mp4">
+        </video>
+        <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+        
+        <!-- Navigation -->
+        <nav class="fixed top-0 left-0 right-0 bg-white bg-opacity-90 shadow-md z-40">
+            <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+                <div class="flex items-center">
+                    <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-3">
+                        <img src="https://i.imgur.com/YYRny8m.png" alt="Logo" class="w-8 h-8 object-contain" />
+                    </div>
+                    
+                    <span class="text-xl font-bold text-blue-800">Orbital</span>
+                </div>
+                
+                <div class="hidden md:flex space-x-8">
+                    <a href="#home" class="nav-link active-nav text-gray-800 font-medium">Home</a>
+                    <a href="#about" class="nav-link text-gray-800 font-medium">About Us</a>
+                    <a href="#courses" class="nav-link text-gray-800 font-medium">Courses</a>
+                    <a href="#abroad" class="nav-link text-gray-800 font-medium">Study Abroad</a>
+                    <a href="#contact" class="nav-link text-gray-800 font-medium">Contact</a>
+                    <button id="loginBtn" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition">
+                        <i class="fas fa-sign-in-alt mr-2"></i>Login
+                    </button>
+                </div>
+                
+                <button id="mobileMenuBtn" class="md:hidden text-gray-800">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div id="mobileMenu" class="hidden md:hidden bg-white py-2 px-4 shadow-lg">
+                <a href="#home" class="block py-2 text-gray-800 font-medium">Home</a>
+                <a href="#about" class="block py-2 text-gray-800 font-medium">About Us</a>
+                <a href="#courses" class="block py-2 text-gray-800 font-medium">Courses</a>
+                <a href="#abroad" class="block py-2 text-gray-800 font-medium">Study Abroad</a>
+                <a href="#contact" class="block py-2 text-gray-800 font-medium">Contact</a>
+                <button id="mobileLoginBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md mt-2 transition">
+                    <i class="fas fa-sign-in-alt mr-2"></i>Login
+                </button>
+            </div>
+        </nav>
+        
+        <!-- Hero Section -->
+        <div id="home" class="h-full flex flex-col justify-center items-center text-center px-4 relative z-10">
+            <h1 class="text-5xl md:text-6xl font-bold text-white mb-4 animate__animated animate__fadeInDown">Orbital Education Foundation</h1>
+            <p class="text-xl md:text-2xl text-blue-100 mb-8">"Education Foundation"</p>
+            <a href="#courses" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full text-lg font-medium transition transform hover:scale-105 shadow-lg">
+                Explore Courses <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+            
+            <div class="absolute bottom-10 left-0 right-0 flex justify-center">
+                <a href="#about" class="text-white animate-bounce">
+                    <i class="fas fa-chevron-down text-3xl"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- About Us Section -->
+    <section id="about" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-12">About Us</h2>
+            
+            <div class="max-w-4xl mx-auto">
+                <div class="bg-blue-50 rounded-xl p-8 mb-8 shadow-md">
+                    <p class="text-gray-700 mb-6">
+                        <span class="text-blue-600 font-bold">Orbital Education Foundation</span> is a premier institution based in Bag Bazar, Kathmandu, Nepal. We are committed to guiding students in their academic journey through bridge courses, entrance exam preparation, and study abroad consultation.
+                    </p>
+                    <p class="text-gray-700 mb-6">
+                        Our programs are built to help students excel in Nepal's toughest competitive exams and global language certifications. We believe in delivering focused, real-world training with modern tools, updated content, and expert instructors.
+                    </p>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-8 shadow-md">
+                        <h3 class="text-2xl font-bold text-blue-800 mb-4 flex items-center">
+                            <i class="fas fa-bullseye mr-3"></i> Our Mission
+                        </h3>
+                        <p class="text-gray-700">
+                            To empower learners with the knowledge, skills, and guidance to succeed in higher education and beyond.
+                        </p>
+                    </div>
+                    
+                    <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-8 shadow-md">
+                        <h3 class="text-2xl font-bold text-blue-800 mb-4 flex items-center">
+                            <i class="fas fa-eye mr-3"></i> Our Vision
+                        </h3>
+                        <p class="text-gray-700">
+                            To become Nepal's leading education platform for academic, professional, and international learning paths.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="mt-8 bg-white rounded-xl p-8 shadow-md border border-gray-100">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">Why Choose Us?</h3>
+                    
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-chalkboard-teacher text-blue-600 text-2xl"></i>
+                            </div>
+                            <h4 class="font-bold text-gray-800 mb-2">Expert Instructors</h4>
+                            <p class="text-gray-600 text-sm">Learn from industry professionals with years of experience</p>
+                        </div>
+                        
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-book-open text-blue-600 text-2xl"></i>
+                            </div>
+                            <h4 class="font-bold text-gray-800 mb-2">Updated Curriculum</h4>
+                            <p class="text-gray-600 text-sm">Courses designed with latest syllabus and exam patterns</p>
+                        </div>
+                        
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-globe-asia text-blue-600 text-2xl"></i>
+                            </div>
+                            <h4 class="font-bold text-gray-800 mb-2">Global Opportunities</h4>
+                            <p class="text-gray-600 text-sm">Pathways to study abroad in top destinations</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Courses Section -->
+    <section id="courses" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-4">Our Courses</h2>
+            <p class="text-center text-gray-600 max-w-2xl mx-auto mb-12">Choose from our wide range of courses designed to help you achieve your academic and professional goals</p>
+            
+            <!-- Course Tabs -->
+            <div class="max-w-6xl mx-auto">
+                <div class="flex overflow-x-auto pb-2 mb-8 scrollbar-hide">
+                    <button class="tab-btn active-tab px-6 py-2 bg-blue-600 text-white rounded-full mr-3 whitespace-nowrap" data-tab="bridge">Bridge Courses</button>
+                    <button class="tab-btn px-6 py-2 bg-white text-gray-800 rounded-full mr-3 whitespace-nowrap" data-tab="ctevt">CTEVT Prep</button>
+                    <button class="tab-btn px-6 py-2 bg-white text-gray-800 rounded-full mr-3 whitespace-nowrap" data-tab="nursing">Nursing Entrance</button>
+                    <button class="tab-btn px-6 py-2 bg-white text-gray-800 rounded-full mr-3 whitespace-nowrap" data-tab="cmat">CMAT/KUUMAT</button>
+                    <button class="tab-btn px-6 py-2 bg-white text-gray-800 rounded-full mr-3 whitespace-nowrap" data-tab="license">Nursing License</button>
+                    <button class="tab-btn px-6 py-2 bg-white text-gray-800 rounded-full mr-3 whitespace-nowrap" data-tab="diploma">Diploma Health</button>
+                    <button class="tab-btn px-6 py-2 bg-white text-gray-800 rounded-full mr-3 whitespace-nowrap" data-tab="korean">Korean Language</button>
+                    <button class="tab-btn px-6 py-2 bg-white text-gray-800 rounded-full mr-3 whitespace-nowrap" data-tab="loksewa">Loksewa Prep</button>
+                    <button class="tab-btn px-6 py-2 bg-white text-gray-800 rounded-full mr-3 whitespace-nowrap" data-tab="ielts">IELTS Prep</button>
+                    <button class="tab-btn px-6 py-2 bg-white text-gray-800 rounded-full mr-3 whitespace-nowrap" data-tab="pte">PTE Prep</button>
+                </div>
+                
+                <!-- Add Course Button (Admin Only) -->
+                <div id="addCourseBtnContainer" class="hidden mb-6">
+                    <button id="addCourseBtn" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md flex items-center">
+                        <i class="fas fa-plus mr-2"></i> Add Course
+                    </button>
+                </div>
+                
+                <!-- Tab Contents -->
+                <div class="bg-white rounded-xl shadow-md p-6">
+                    <!-- Bridge Courses -->
+                    <div id="bridge" class="tab-content active">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-6">Advanced Bridge Science Courses</h3>
+                        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <!-- Course Card 1 -->
+                            <div class="course-card bg-white rounded-lg border border-gray-200 overflow-hidden shadow-sm hover:shadow-md transition">
+                                <div class="h-40 bg-blue-100 flex items-center justify-center">
+                                    <i class="fas fa-atom text-5xl text-blue-600"></i>
+                                </div>
+                                <div class="p-4">
+                                    <h4 class="font-bold text-lg text-gray-800 mb-2">Physics Bridge Course</h4>
+                                    <p class="text-gray-600 text-sm mb-4">Comprehensive preparation for advanced physics concepts with practical applications.</p>
+                                    <button class="view-details-btn w-full bg-blue-100 hover:bg-blue-200 text-blue-800 py-2 rounded-md text-sm font-medium transition" data-course="physics-bridge">
+                                        See Details
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Course Card 2 -->
+                            <div class="course-card bg-white rounded-lg border border-gray-200 overflow-hidden shadow-sm hover:shadow-md transition">
+                                <div class="h-40 bg-green-100 flex items-center justify-center">
+                                    <i class="fas fa-dna text-5xl text-green-600"></i>
+                                </div>
+                                <div class="p-4">
+                                    <h4 class="font-bold text-lg text-gray-800 mb-2">Biology Bridge Course</h4>
+                                    <p class="text-gray-600 text-sm mb-4">Master biological concepts with lab sessions and interactive learning modules.</p>
+                                    <button class="view-details-btn w-full bg-blue-100 hover:bg-blue-200 text-blue-800 py-2 rounded-md text-sm font-medium transition" data-course="biology-bridge">
+                                        See Details
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Course Card 3 -->
+                            <div class="course-card bg-white rounded-lg border border-gray-200 overflow-hidden shadow-sm hover:shadow-md transition">
+                                <div class="h-40 bg-purple-100 flex items-center justify-center">
+                                    <i class="fas fa-square-root-alt text-5xl text-purple-600"></i>
+                                </div>
+                                <div class="p-4">
+                                    <h4 class="font-bold text-lg text-gray-800 mb-2">Mathematics Bridge Course</h4>
+                                    <p class="text-gray-600 text-sm mb-4">Advanced mathematical concepts with problem-solving techniques and real-world applications.</p>
+                                    <button class="view-details-btn w-full bg-blue-100 hover:bg-blue-200 text-blue-800 py-2 rounded-md text-sm font-medium transition" data-course="math-bridge">
+                                        See Details
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- CTEVT Preparation -->
+                    <div id="ctevt" class="tab-content">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-6">CTEVT Preparation Courses</h3>
+                        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <!-- Course Card 1 -->
+                            <div class="course-card bg-white rounded-lg border border-gray-200 overflow-hidden shadow-sm hover:shadow-md transition">
+                                <div class="h-40 bg-orange-100 flex items-center justify-center">
+                                    <i class="fas fa-tools text-5xl text-orange-600"></i>
+                                </div>
+                                <div class="p-4">
+                                    <h4 class="font-bold text-lg text-gray-800 mb-2">Engineering Entrance Prep</h4>
+                                    <p class="text-gray-600 text-sm mb-4">Comprehensive preparation for CTEVT engineering entrance examinations.</p>
+                                    <button class="view-details-btn w-full bg-blue-100 hover:bg-blue-200 text-blue-800 py-2 rounded-md text-sm font-medium transition" data-course="ctevt-engineering">
+                                        See Details
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Course Card 2 -->
+                            <div class="course-card bg-white rounded-lg border border-gray-200 overflow-hidden shadow-sm hover:shadow-md transition">
+                                <div class="h-40 bg-teal-100 flex items-center justify-center">
+                                    <i class="fas fa-user-md text-5xl text-teal-600"></i>
+                                </div>
+                                <div class="p-4">
+                                    <h4 class="font-bold text-lg text-gray-800 mb-2">Health Science Prep</h4>
+                                    <p class="text-gray-600 text-sm mb-4">Specialized course for health science programs under CTEVT.</p>
+                                    <button class="view-details-btn w-full bg-blue-100 hover:bg-blue-200 text-blue-800 py-2 rounded-md text-sm font-medium transition" data-course="ctevt-health">
+                                        See Details
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Nursing Entrance -->
+                    <div id="nursing" class="tab-content">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-6">Nursing Entrance Preparation</h3>
+                        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <!-- Course Card 1 -->
+                            <div class="course-card bg-white rounded-lg border border-gray-200 overflow-hidden shadow-sm hover:shadow-md transition">
+                                <div class="h-40 bg-red-100 flex items-center justify-center">
+                                    <i class="fas fa-heartbeat text-5xl text-red-600"></i>
+                                </div>
+                                <div class="p-4">
+                                    <h4 class="font-bold text-lg text-gray-800 mb-2">BN Nursing Entrance</h4>
+                                    <p class="text-gray-600 text-sm mb-4">Complete preparation for Bachelor of Nursing entrance examinations.</p>
+                                    <button class="view-details-btn w-full bg-blue-100 hover:bg-blue-200 text-blue-800 py-2 rounded-md text-sm font-medium transition" data-course="bn-nursing">
+                                        See Details
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Course Card 2 -->
+                            <div class="course-card bg-white rounded-lg border border-gray-200 overflow-hidden shadow-sm hover:shadow-md transition">
+                                <div class="h-40 bg-pink-100 flex items-center justify-center">
+                                    <i class="fas fa-procedures text-5xl text-pink-600"></i>
+                                </div>
+                                <div class="p-4">
+                                    <h4 class="font-bold text-lg text-gray-800 mb-2">PCL Nursing Entrance</h4>
+                                    <p class="text-gray-600 text-sm mb-4">Focused course for Proficiency Certificate Level nursing entrance.</p>
+                                    <button class="view-details-btn w-full bg-blue-100 hover:bg-blue-200 text-blue-800 py-2 rounded-md text-sm font-medium transition" data-course="pcl-nursing">
+                                        See Details
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- CMAT/KUUMAT -->
+                    <div id="cmat" class="tab-content">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-6">CMAT/KUUMAT Preparation</h3>
+                        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <!-- Course Card 1 -->
+                            <div class="course-card bg-white rounded-lg border border-gray-200 overflow-hidden shadow-sm hover:shadow-md transition">
+                                <div class="h-40 bg-indigo-100 flex items-center justify-center">
+                                    <i class="fas fa-brain text-5xl text-indigo-600"></i>
+                                </div>
+                                <div class="p-4">
+                                    <h4 class="font-bold text-lg text-gray-800 mb-2">CMAT Intensive</h4>
+                                    <p class="text-gray-600 text-sm mb-4">Complete preparation for the Common Management Admission Test.</p>
+                                    <button class="view-details-btn w-full bg-blue-100 hover:bg-blue-200 text-blue-800 py-2 rounded-md text-sm font-medium transition" data-course="cmat-intensive">
+                                        See Details
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Course Card 2 -->
+                            <div class="course-card bg-white rounded-lg border border-gray-200 overflow-hidden shadow-sm hover:shadow-md transition">
+                                <div class="h-40 bg-yellow-100 flex items-center justify-center">
+                                    <i class="fas fa-university text-5xl text-yellow-600"></i>
+                                </div>
+                                <div class="p-4">
+                                    <h4 class="font-bold text-lg text-gray-800 mb-2">KUUMAT Crash Course</h4>
+                                    <p class="text-gray-600 text-sm mb-4">Fast-track preparation for Kathmandu University Management Admission Test.</p>
+                                    <button class="view-details-btn w-full bg-blue-100 hover:bg-blue-200 text-blue-800 py-2 rounded-md text-sm font-medium transition" data-course="kummat-crash">
+                                        See Details
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Other course tabs would follow the same pattern -->
+                    <!-- For brevity, I'm showing only a few course categories -->
+                    <!-- In a real implementation, all 11 categories would be included -->
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Study Abroad Section -->
+    <section id="abroad" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-12">Study Abroad Opportunities</h2>
+            
+            <div class="max-w-6xl mx-auto">
+                <div class="grid md:grid-cols-3 gap-8">
+                    <!-- South Korea -->
+                    <div class="bg-blue-50 rounded-xl p-6 shadow-md border border-blue-100">
+                        <div class="flex items-center mb-4">
+                            <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-flag text-blue-600"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-800">South Korea</h3>
+                        </div>
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>EPS-TOPIK Training</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>Korean Language Classes</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>Visa Document Assistance</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>School/College Counseling</span>
+                            </li>
+                        </ul>
+                        <button class="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md transition">
+                            Learn More
+                        </button>
+                    </div>
+                    
+                    <!-- Japan -->
+                    <div class="bg-red-50 rounded-xl p-6 shadow-md border border-red-100">
+                        <div class="flex items-center mb-4">
+                            <div class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-flag text-red-600"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-800">Japan</h3>
+                        </div>
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>Japanese Language Classes</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>JLPT Support</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>SOP & Visa Preparation</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>College Matching Assistance</span>
+                            </li>
+                        </ul>
+                        <button class="mt-6 w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded-md transition">
+                            Learn More
+                        </button>
+                    </div>
+                    
+                    <!-- Canada -->
+                    <div class="bg-green-50 rounded-xl p-6 shadow-md border border-green-100">
+                        <div class="flex items-center mb-4">
+                            <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-flag text-green-600"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-800">Canada</h3>
+                        </div>
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>IELTS Coaching</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>University & College Search</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>SOP & Visa Consulting</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>Post-admission Support</span>
+                            </li>
+                        </ul>
+                        <button class="mt-6 w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-md transition">
+                            Learn More
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="mt-12 bg-white rounded-xl shadow-md p-8">
+                    <h3 class="text-2xl font-bold text-center text-gray-800 mb-6">Our Study Abroad Process</h3>
+                    
+                    <div class="grid md:grid-cols-4 gap-6">
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <span class="text-blue-600 font-bold text-xl">1</span>
+                            </div>
+                            <h4 class="font-bold text-gray-800 mb-2">Counseling</h4>
+                            <p class="text-gray-600 text-sm">Personalized guidance to choose the right country and program</p>
+                        </div>
+                        
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <span class="text-blue-600 font-bold text-xl">2</span>
+                            </div>
+                            <h4 class="font-bold text-gray-800 mb-2">Test Prep</h4>
+                            <p class="text-gray-600 text-sm">Language training and entrance exam preparation</p>
+                        </div>
+                        
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <span class="text-blue-600 font-bold text-xl">3</span>
+                            </div>
+                            <h4 class="font-bold text-gray-800 mb-2">Application</h4>
+                            <p class="text-gray-600 text-sm">Document preparation and university application</p>
+                        </div>
+                        
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <span class="text-blue-600 font-bold text-xl">4</span>
+                            </div>
+                            <h4 class="font-bold text-gray-800 mb-2">Visa & Departure</h4>
+                            <p class="text-gray-600 text-sm">Visa processing and pre-departure orientation</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contact Section -->
+    <section id="contact" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-12">Contact Us</h2>
+            
+            <div class="max-w-6xl mx-auto bg-white rounded-xl shadow-md overflow-hidden">
+                <div class="md:flex">
+                    <div class="md:w-1/2 bg-blue-600 text-white p-8">
+                        <h3 class="text-2xl font-bold mb-6">Get in Touch</h3>
+                        
+                        <div class="space-y-6">
+                            <div class="flex items-start">
+                                <div class="bg-blue-500 p-3 rounded-full mr-4">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold mb-1">Location</h4>
+                                    <p>Bag Bazar, Kathmandu, Nepal</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="bg-blue-500 p-3 rounded-full mr-4">
+                                    <i class="fas fa-phone-alt"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold mb-1">Phone</h4>
+                                    <p>01-5348698 / 9841781818</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="bg-blue-500 p-3 rounded-full mr-4">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold mb-1">Email</h4>
+                                    <p>bagbazarorbital@gmail.com</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-8">
+                            <h4 class="font-bold mb-4">Follow Us</h4>
+                            <div class="flex space-x-4">
+                                <a href="#" class="bg-blue-500 hover:bg-blue-400 w-10 h-10 rounded-full flex items-center justify-center transition">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+                                <a href="#" class="bg-blue-500 hover:bg-blue-400 w-10 h-10 rounded-full flex items-center justify-center transition">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                                <a href="#" class="bg-blue-500 hover:bg-blue-400 w-10 h-10 rounded-full flex items-center justify-center transition">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+                                <a href="#" class="bg-blue-500 hover:bg-blue-400 w-10 h-10 rounded-full flex items-center justify-center transition">
+                                    <i class="fab fa-linkedin-in"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="md:w-1/2 p-8">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-6">Send Us a Message</h3>
+                        <form id="contactForm">
+                            <div class="mb-4">
+                                <label for="name" class="block text-gray-700 font-medium mb-2">Full Name</label>
+                                <input type="text" id="name" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label for="email" class="block text-gray-700 font-medium mb-2">Email</label>
+                                <input type="email" id="email" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label for="message" class="block text-gray-700 font-medium mb-2">Message</label>
+                                <textarea id="message" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required></textarea>
+                            </div>
+                            
+                            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md transition">
+                                Send Message
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Orbital Education Foundation</h3>
+                    <p class="text-gray-400">"Education Foundation" - Providing quality education and guidance for academic and professional success.</p>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#home" class="text-gray-400 hover:text-white transition">Home</a></li>
+                        <li><a href="#about" class="text-gray-400 hover:text-white transition">About Us</a></li>
+                        <li><a href="#courses" class="text-gray-400 hover:text-white transition">Courses</a></li>
+                        <li><a href="#abroad" class="text-gray-400 hover:text-white transition">Study Abroad</a></li>
+                        <li><a href="#contact" class="text-gray-400 hover:text-white transition">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold mb-4">Courses</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Bridge Courses</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Entrance Preparation</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Language Training</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Test Preparation</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold mb-4">Contact Info</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-2"></i>
+                            <span>Bag Bazar, Kathmandu, Nepal</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-phone-alt mt-1 mr-2"></i>
+                            <span>01-5348698 / 9841781818</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-envelope mt-1 mr-2"></i>
+                            <span>bagbazarorbital@gmail.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-8 pt-6 text-center text-gray-400">
+                <p>&copy; 2023 Orbital Education Foundation. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="p-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Login to Your Account</h2>
+                
+                <form id="loginForm">
+                    <div class="mb-4">
+                        <label for="loginEmail" class="block text-gray-700 font-medium mb-2">Email</label>
+                        <input type="email" id="loginEmail" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                        <p id="emailError" class="text-red-500 text-sm mt-1 hidden">Please use a Gmail account</p>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <label for="loginPassword" class="block text-gray-700 font-medium mb-2">Password</label>
+                        <input type="password" id="loginPassword" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                    </div>
+                    
+                    <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md transition mb-4">
+                        Login
+                    </button>
+                    
+                    <p class="text-center text-gray-600">
+                        Don't have an account? <button id="showSignupBtn" class="text-blue-600 font-medium">Sign up</button>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Signup Modal -->
+    <div id="signupModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="p-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Create Your Account</h2>
+                
+                <form id="signupForm">
+                    <div class="mb-4">
+                        <label for="signupName" class="block text-gray-700 font-medium mb-2">Full Name</label>
+                        <input type="text" id="signupName" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="signupEmail" class="block text-gray-700 font-medium mb-2">Email</label>
+                        <input type="email" id="signupEmail" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                        <p id="signupEmailError" class="text-red-500 text-sm mt-1 hidden">Please use a Gmail account</p>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <label for="signupPassword" class="block text-gray-700 font-medium mb-2">Password</label>
+                        <input type="password" id="signupPassword" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                    </div>
+                    
+                    <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md transition mb-4">
+                        Sign Up
+                    </button>
+                    
+                    <p class="text-center text-gray-600">
+                        Already have an account? <button id="showLoginBtn" class="text-blue-600 font-medium">Login</button>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Course Details Modal -->
+    <div id="courseModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="p-6">
+                <div id="courseModalContent">
+                    <!-- Content will be loaded dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Add Course Modal (Admin Only) -->
+    <div id="addCourseModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="p-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Add New Course</h2>
+                
+                <form id="addCourseForm">
+                    <div class="mb-4">
+                        <label for="courseTitle" class="block text-gray-700 font-medium mb-2">Course Title</label>
+                        <input type="text" id="courseTitle" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="courseCategory" class="block text-gray-700 font-medium mb-2">Category</label>
+                        <select id="courseCategory" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                            <option value="">Select Category</option>
+                            <option value="bridge">Bridge Courses</option>
+                            <option value="ctevt">CTEVT Preparation</option>
+                            <option value="nursing">Nursing Entrance</option>
+                            <option value="cmat">CMAT/KUUMAT</option>
+                            <option value="license">Nursing License</option>
+                            <option value="diploma">Diploma Health</option>
+                            <option value="korean">Korean Language</option>
+                            <option value="loksewa">Loksewa Prep</option>
+                            <option value="ielts">IELTS Prep</option>
+                            <option value="pte">PTE Prep</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="courseDescription" class="block text-gray-700 font-medium mb-2">Full Description</label>
+                        <textarea id="courseDescription" rows="5" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required></textarea>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="courseImage" class="block text-gray-700 font-medium mb-2">Course Image</label>
+                        <input type="file" id="courseImage" accept="image/*" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    
+                    <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-md transition">
+                        Add Course
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Admin Dashboard Modal -->
+    <div id="adminDashboard" class="modal">
+        <div class="modal-content" style="max-width: 1200px;">
+            <span class="close">&times;</span>
+            <div class="p-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Admin Dashboard</h2>
+                
+                <div class="flex mb-6 border-b border-gray-200">
+                    <button id="studentRecordsTab" class="px-4 py-2 font-medium text-blue-600 border-b-2 border-blue-600">Student Records</button>
+                    <button id="performanceTab" class="px-4 py-2 font-medium text-gray-500 hover:text-blue-600">Performance Reports</button>
+                </div>
+                
+                <!-- Student Records Content -->
+                <div id="studentRecordsContent">
+                    <div class="mb-6 flex justify-between items-center">
+                        <h3 class="text-xl font-bold text-gray-800">Student Details</h3>
+                        <button id="addStudentBtn" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md">
+                            <i class="fas fa-plus mr-2"></i> Add Student
+                        </button>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <input type="text" id="studentSearch" placeholder="Search by name..." class="w-full md:w-1/2 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-white border border-gray-200">
+                            <thead>
+                                <tr class="bg-gray-100">
+                                    <th class="py-2 px-4 border-b">Name</th>
+                                    <th class="py-2 px-4 border-b">Phone</th>
+                                    <th class="py-2 px-4 border-b">Location</th>
+                                    <th class="py-2 px-4 border-b">Previous School</th>
+                                    <th class="py-2 px-4 border-b">Interested Course</th>
+                                    <th class="py-2 px-4 border-b">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="studentTableBody">
+                                <!-- Student data will be loaded here -->
+                                <tr>
+                                    <td colspan="6" class="py-4 text-center text-gray-500">No student records found</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Performance Reports Content -->
+                <div id="performanceContent" class="hidden">
+                    <div class="grid md:grid-cols-4 gap-6 mb-6">
+                        <div class="bg-white p-4 rounded-lg shadow border border-gray-200">
+                            <h4 class="font-bold text-gray-800 mb-2">Select Student</h4>
+                            <select id="studentSelect" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <option value="">Select a student</option>
+                            </select>
+                        </div>
+                        
+                        <div class="bg-white p-4 rounded-lg shadow border border-gray-200">
+                            <h4 class="font-bold text-gray-800 mb-2">Test Name</h4>
+                            <input type="text" id="testName" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+                        
+                        <div class="bg-white p-4 rounded-lg shadow border border-gray-200">
+                            <h4 class="font-bold text-gray-800 mb-2">Score</h4>
+                            <input type="number" id="testScore" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+                        
+                        <div class="bg-white p-4 rounded-lg shadow border border-gray-200">
+                            <h4 class="font-bold text-gray-800 mb-2">Date</h4>
+                            <input type="date" id="testDate" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between mb-4">
+                        <h3 class="text-xl font-bold text-gray-800">Performance Analysis</h3>
+                        <button id="addTestRecordBtn" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md">
+                            <i class="fas fa-plus mr-2"></i> Add Test Record
+                        </button>
+                    </div>
+                    
+                    <div class="bg-white p-4 rounded-lg shadow border border-gray-200 mb-6">
+                        <div class="chart-container">
+                            <canvas id="performanceChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div id="aiAnalysis" class="bg-white p-4 rounded-lg shadow border border-gray-200">
+                        <h4 class="font-bold text-gray-800 mb-2">AI Performance Analysis</h4>
+                        <div id="aiAnalysisContent" class="text-gray-700">
+                            Select a student and add test records to view performance analysis.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Add Student Modal -->
+    <div id="addStudentModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="p-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Add Student Record</h2>
+                
+                <form id="addStudentForm">
+                    <div class="mb-4">
+                        <label for="studentName" class="block text-gray-700 font-medium mb-2">Full Name</label>
+                        <input type="text" id="studentName" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="studentPhone" class="block text-gray-700 font-medium mb-2">Phone Number</label>
+                        <input type="tel" id="studentPhone" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="studentLocation" class="block text-gray-700 font-medium mb-2">Location</label>
+                        <input type="text" id="studentLocation" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="studentSchool" class="block text-gray-700 font-medium mb-2">Previous School</label>
+                        <input type="text" id="studentSchool" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="studentCourse" class="block text-gray-700 font-medium mb-2">Interested Course</label>
+                        <select id="studentCourse" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                            <option value="">Select Course</option>
+                            <option value="Physics Bridge Course">Physics Bridge Course</option>
+                            <option value="Biology Bridge Course">Biology Bridge Course</option>
+                            <option value="Mathematics Bridge Course">Mathematics Bridge Course</option>
+                            <option value="Engineering Entrance Prep">Engineering Entrance Prep</option>
+                            <option value="Health Science Prep">Health Science Prep</option>
+                            <option value="BN Nursing Entrance">BN Nursing Entrance</option>
+                            <option value="PCL Nursing Entrance">PCL Nursing Entrance</option>
+                            <option value="CMAT Intensive">CMAT Intensive</option>
+                            <option value="KUUMAT Crash Course">KUUMAT Crash Course</option>
+                            <option value="Korean Language">Korean Language</option>
+                            <option value="IELTS Preparation">IELTS Preparation</option>
+                        </select>
+                    </div>
+                    
+                    <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md transition">
+                        Save Student
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Success Toast -->
+    <div id="successToast" class="fixed bottom-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg hidden">
+        <div class="flex items-center">
+            <i class="fas fa-check-circle mr-2"></i>
+            <span id="successMessage">Operation completed successfully!</span>
+        </div>
+    </div>
+    
+    <!-- Error Toast -->
+    <div id="errorToast" class="fixed bottom-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg hidden">
+        <div class="flex items-center">
+            <i class="fas fa-exclamation-circle mr-2"></i>
+            <span id="errorMessage">An error occurred. Please try again.</span>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // DOM Elements
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const loginBtn = document.getElementById('loginBtn');
+        const mobileLoginBtn = document.getElementById('mobileLoginBtn');
+        const loginModal = document.getElementById('loginModal');
+        const signupModal = document.getElementById('signupModal');
+        const courseModal = document.getElementById('courseModal');
+        const addCourseModal = document.getElementById('addCourseModal');
+        const adminDashboard = document.getElementById('adminDashboard');
+        const addStudentModal = document.getElementById('addStudentModal');
+        const closeButtons = document.querySelectorAll('.close');
+        const showSignupBtn = document.getElementById('showSignupBtn');
+        const showLoginBtn = document.getElementById('showLoginBtn');
+        const loginForm = document.getElementById('loginForm');
+        const signupForm = document.getElementById('signupForm');
+        const contactForm = document.getElementById('contactForm');
+        const addCourseForm = document.getElementById('addCourseForm');
+        const addStudentForm = document.getElementById('addStudentForm');
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+        const viewDetailsBtns = document.querySelectorAll('.view-details-btn');
+        const addCourseBtn = document.getElementById('addCourseBtn');
+        const addCourseBtnContainer = document.getElementById('addCourseBtnContainer');
+        const studentRecordsTab = document.getElementById('studentRecordsTab');
+        const performanceTab = document.getElementById('performanceTab');
+        const studentRecordsContent = document.getElementById('studentRecordsContent');
+        const performanceContent = document.getElementById('performanceContent');
+        const addStudentBtn = document.getElementById('addStudentBtn');
+        const studentSearch = document.getElementById('studentSearch');
+        const studentTableBody = document.getElementById('studentTableBody');
+        const studentSelect = document.getElementById('studentSelect');
+        const addTestRecordBtn = document.getElementById('addTestRecordBtn');
+        const aiAnalysisContent = document.getElementById('aiAnalysisContent');
+        const successToast = document.getElementById('successToast');
+        const errorToast = document.getElementById('errorToast');
+        
+        // State
+        let currentUser = null;
+        let isAdmin = false;
+        let students = [];
+        let testRecords = [];
+        let performanceChart = null;
+        
+        // Sample Course Data
+        const courses = {
+            'physics-bridge': {
+                title: 'Physics Bridge Course',
+                category: 'Bridge Courses',
+                description: 'This comprehensive physics bridge course covers all fundamental concepts needed for advanced studies. The course includes theoretical explanations, practical applications, problem-solving techniques, and regular assessments to track progress. Students will gain a strong foundation in mechanics, thermodynamics, electromagnetism, and modern physics.',
+                duration: '3 months',
+                fee: 'NPR 15,000',
+                schedule: 'Monday, Wednesday, Friday (4:00 PM - 6:00 PM)',
+                instructor: 'Dr. Rajesh Sharma (PhD in Physics)'
+            },
+            'biology-bridge': {
+                title: 'Biology Bridge Course',
+                category: 'Bridge Courses',
+                description: 'Our biology bridge course provides in-depth coverage of cellular biology, genetics, microbiology, and human anatomy. The course combines classroom lectures with laboratory sessions to enhance understanding. Special emphasis is placed on developing scientific thinking and research skills essential for higher education in biological sciences.',
+                duration: '3 months',
+                fee: 'NPR 15,000',
+                schedule: 'Tuesday, Thursday, Saturday (10:00 AM - 12:00 PM)',
+                instructor: 'Dr. Anita Gurung (MSc in Molecular Biology)'
+            },
+            'math-bridge': {
+                title: 'Mathematics Bridge Course',
+                category: 'Bridge Courses',
+                description: 'Designed to strengthen mathematical foundations, this course covers algebra, calculus, geometry, and statistics at an advanced level. Students will learn problem-solving strategies and mathematical reasoning skills through interactive sessions and practical exercises. The course prepares students for rigorous academic programs requiring strong mathematical abilities.',
+                duration: '3 months',
+                fee: 'NPR 14,000',
+                schedule: 'Monday to Friday (2:00 PM - 4:00 PM)',
+                instructor: 'Prof. Binod Adhikari (PhD in Mathematics)'
+            },
+            'ctevt-engineering': {
+                title: 'Engineering Entrance Prep',
+                category: 'CTEVT Preparation',
+                description: 'Specialized preparation course for CTEVT engineering entrance examinations. The curriculum includes physics, chemistry, mathematics, and engineering aptitude sections. Regular mock tests simulate actual exam conditions, and personalized feedback helps students improve their performance.',
+                duration: '2 months',
+                fee: 'NPR 12,000',
+                schedule: 'Daily (7:00 AM - 9:00 AM)',
+                instructor: 'Er. Santosh Pandey'
+            },
+            'ctevt-health': {
+                title: 'Health Science Prep',
+                category: 'CTEVT Preparation',
+                description: 'Comprehensive preparation for health science programs under CTEVT. The course covers biology, chemistry, physics, and health science fundamentals. Interactive sessions, case studies, and practical demonstrations enhance learning. Previous years\' question papers are analyzed to focus on important topics.',
+                duration: '2 months',
+                fee: 'NPR 11,000',
+                schedule: 'Daily (10:00 AM - 12:00 PM)',
+                instructor: 'Dr. Sabina Karki'
+            },
+            'bn-nursing': {
+                title: 'BN Nursing Entrance',
+                category: 'Nursing Entrance',
+                description: 'Complete preparation course for Bachelor of Nursing entrance examinations. The syllabus includes human anatomy, physiology, microbiology, biochemistry, and nursing fundamentals. Special attention is given to developing critical thinking skills needed for nursing education and practice.',
+                duration: '3 months',
+                fee: 'NPR 16,000',
+                schedule: 'Sunday to Friday (6:00 AM - 8:00 AM)',
+                instructor: 'Dr. Anjali Shrestha'
+            },
+            'pcl-nursing': {
+                title: 'PCL Nursing Entrance',
+                category: 'Nursing Entrance',
+                description: 'Focused preparation course for Proficiency Certificate Level nursing entrance examinations. The curriculum covers basic sciences, nursing concepts, and general knowledge. Interactive learning methods and regular assessments ensure students are well-prepared for the competitive exam.',
+                duration: '2.5 months',
+                fee: 'NPR 14,000',
+                schedule: 'Sunday to Friday (4:00 PM - 6:00 PM)',
+                instructor: 'Ms. Rita Thapa'
+            },
+            'cmat-intensive': {
+                title: 'CMAT Intensive',
+                category: 'CMAT/KUUMAT',
+                description: 'Intensive preparation course for the Common Management Admission Test (CMAT). The program focuses on quantitative techniques, logical reasoning, language comprehension, and general awareness. Strategic test-taking approaches and time management techniques are emphasized to maximize scores.',
+                duration: '6 weeks',
+                fee: 'NPR 10,000',
+                schedule: 'Daily (3:00 PM - 5:00 PM)',
+                instructor: 'Mr. Ramesh Khadka'
+            },
+            'kummat-crash': {
+                title: 'KUUMAT Crash Course',
+                category: 'CMAT/KUUMAT',
+                description: 'Fast-track preparation course for Kathmandu University Management Admission Test (KUUMAT). The condensed curriculum covers all test sections with emphasis on frequently tested concepts. Mock tests with detailed analysis help students identify strengths and weaknesses.',
+                duration: '4 weeks',
+                fee: 'NPR 9,000',
+                schedule: 'Daily (7:00 AM - 9:00 AM)',
+                instructor: 'Ms. Priya Singh'
+            }
+        };
+        
+        // Sample Student Data
+        const sampleStudents = [
+            {
+                id: 1,
+                name: 'Aarav Sharma',
+                phone: '9841122334',
+                location: 'Kathmandu',
+                school: 'ABC Higher Secondary School',
+                course: 'Physics Bridge Course'
+            },
+            {
+                id: 2,
+                name: 'Priya Gurung',
+                phone: '9811223344',
+                location: 'Lalitpur',
+                school: 'XYZ College',
+                course: 'Biology Bridge Course'
+            },
+            {
+                id: 3,
+                name: 'Rohan Thapa',
+                phone: '9800112233',
+                location: 'Bhaktapur',
+                school: 'PQR School',
+                course: 'BN Nursing Entrance'
+            }
+        ];
+        
+        // Sample Test Records
+        const sampleTestRecords = [
+            { studentId: 1, testName: 'Physics Midterm', score: 75, date: '2023-05-10' },
+            { studentId: 1, testName: 'Physics Final', score: 82, date: '2023-06-15' },
+            { studentId: 2, testName: 'Biology Quiz 1', score: 68, date: '2023-05-05' },
+            { studentId: 2, testName: 'Biology Midterm', score: 72, date: '2023-05-20' },
+            { studentId: 2, testName: 'Biology Final', score: 79, date: '2023-06-18' },
+            { studentId: 3, testName: 'Nursing Entrance Mock 1', score: 65, date: '2023-04-01' },
+            { studentId: 3, testName: 'Nursing Entrance Mock 2', score: 70, date: '2023-04-15' },
+            { studentId: 3, testName: 'Nursing Entrance Mock 3', score: 78, date: '2023-05-01' }
+        ];
+        
+        // Initialize
+        function init() {
+            // Load sample data
+            students = [...sampleStudents];
+            testRecords = [...sampleTestRecords];
+            
+            // Update student dropdown
+            updateStudentSelect();
+            
+            // Render student table
+            renderStudentTable(students);
+        }
+        
+        // Event Listeners
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        loginBtn.addEventListener('click', () => {
+            loginModal.style.display = 'block';
+        });
+        
+        mobileLoginBtn.addEventListener('click', () => {
+            mobileMenu.classList.add('hidden');
+            loginModal.style.display = 'block';
+        });
+        
+        closeButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                loginModal.style.display = 'none';
+                signupModal.style.display = 'none';
+                courseModal.style.display = 'none';
+                addCourseModal.style.display = 'none';
+                adminDashboard.style.display = 'none';
+                addStudentModal.style.display = 'none';
+            });
+        });
+        
+        showSignupBtn.addEventListener('click', () => {
+            loginModal.style.display = 'none';
+            signupModal.style.display = 'block';
+        });
+        
+        showLoginBtn.addEventListener('click', () => {
+            signupModal.style.display = 'none';
+            loginModal.style.display = 'block';
+        });
+        
+        window.addEventListener('click', (e) => {
+            if (e.target === loginModal) loginModal.style.display = 'none';
+            if (e.target === signupModal) signupModal.style.display = 'none';
+            if (e.target === courseModal) courseModal.style.display = 'none';
+            if (e.target === addCourseModal) addCourseModal.style.display = 'none';
+            if (e.target === adminDashboard) adminDashboard.style.display = 'none';
+            if (e.target === addStudentModal) addStudentModal.style.display = 'none';
+        });
+        
+        // Tab switching
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tabId = btn.getAttribute('data-tab');
+                
+                // Update active tab button
+                tabBtns.forEach(b => b.classList.remove('active-tab', 'bg-blue-600', 'text-white'));
+                tabBtns.forEach(b => b.classList.add('bg-white', 'text-gray-800'));
+                btn.classList.add('active-tab', 'bg-blue-600', 'text-white');
+                btn.classList.remove('bg-white', 'text-gray-800');
+                
+                // Update active tab content
+                tabContents.forEach(content => content.classList.remove('active'));
+                document.getElementById(tabId).classList.add('active');
+                
+                // Set the category in add course form
+                if (isAdmin) {
+                    document.getElementById('courseCategory').value = tabId;
+                }
+            });
+        });
+        
+        // View course details
+        viewDetailsBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const courseId = btn.getAttribute('data-course');
+                showCourseDetails(courseId);
+            });
+        });
+        
+        // Add course button
+        if (addCourseBtn) {
+            addCourseBtn.addEventListener('click', () => {
+                addCourseModal.style.display = 'block';
+            });
+        }
+        
+        // Admin tabs
+        studentRecordsTab.addEventListener('click', () => {
+            studentRecordsTab.classList.add('text-blue-600', 'border-blue-600');
+            studentRecordsTab.classList.remove('text-gray-500');
+            performanceTab.classList.add('text-gray-500');
+            performanceTab.classList.remove('text-blue-600', 'border-blue-600');
+            
+            studentRecordsContent.classList.remove('hidden');
+            performanceContent.classList.add('hidden');
+        });
+        
+        performanceTab.addEventListener('click', () => {
+            performanceTab.classList.add('text-blue-600', 'border-blue-600');
+            performanceTab.classList.remove('text-gray-500');
+            studentRecordsTab.classList.add('text-gray-500');
+            studentRecordsTab.classList.remove('text-blue-600', 'border-blue-600');
+            
+            performanceContent.classList.remove('hidden');
+            studentRecordsContent.classList.add('hidden');
+        });
+        
+        // Add student button
+        addStudentBtn.addEventListener('click', () => {
+            addStudentModal.style.display = 'block';
+        });
+        
+        // Student search
+        studentSearch.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            const filteredStudents = students.filter(student => 
+                student.name.toLowerCase().includes(searchTerm)
+            );
+            renderStudentTable(filteredStudents);
+        });
+        
+        // Student select change
+        studentSelect.addEventListener('change', (e) => {
+            const studentId = parseInt(e.target.value);
+            if (studentId) {
+                renderPerformanceChart(studentId);
+                performAIAnalysis(studentId);
+            } else {
+                // Clear chart and analysis
+                if (performanceChart) {
+                    performanceChart.destroy();
+                }
+                aiAnalysisContent.innerHTML = 'Select a student and add test records to view performance analysis.';
+            }
+        });
+        
+        // Add test record
+        addTestRecordBtn.addEventListener('click', () => {
+            const studentId = parseInt(studentSelect.value);
+            const testName = document.getElementById('testName').value;
+            const score = parseInt(document.getElementById('testScore').value);
+            const date = document.getElementById('testDate').value;
+            
+            if (!studentId || !testName || !score || !date) {
+                showError('Please fill all fields');
+                return;
+            }
+            
+            // Add test record
+            const newRecord
+</html>

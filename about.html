@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="icon" type="image/png" href="https://i.imgur.com/7QBJk3z.png" />
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us - Orbital Education Foundation</title>
@@ -125,12 +123,15 @@
     </style>
 </head>
 <body class="bg-gray-50">
-    <!-- Video Background -->
-    <div class="relative h-screen overflow-hidden">
-        <video autoplay muted loop class="hero-video">
-            <source src="https://assets.mixkit.co/videos/preview/mixkit-tree-with-yellow-flowers-1173-large.mp4" type="video/mp4">
-        </video>
-        <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+   <!-- Image Background instead of Video -->
+<div 
+class="relative h-screen overflow-hidden bg-cover bg-center" 
+style="background-image: url('https://i.imgur.com/KbciXSQ.jpeg');"
+>
+<!-- Overlay with opacity -->
+<div class="absolute inset-0 bg-black bg-opacity-10"></div>
+</div>
+
         
         <!-- Navigation -->
         <nav class="fixed top-0 left-0 right-0 bg-white bg-opacity-90 shadow-md z-40">
@@ -147,7 +148,7 @@
                     <a href="index.html" class="nav-link text-gray-800 font-medium">Home</a>
                     <a href="about.html" class="nav-link active-nav text-gray-800 font-medium">About Us</a>
                     <a href="courses.html" class="nav-link text-gray-800 font-medium">Courses</a>
-                    <a href="study-abroad.html" class="nav-link text-gray-800 font-medium">Study Abroad</a>
+                    <a href="studyabroad.html" class="nav-link text-gray-800 font-medium">Study Abroad</a>
                     <a href="contact.html" class="nav-link text-gray-800 font-medium">Contact</a>
                     <button id="loginBtn" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition">
                         <i class="fas fa-sign-in-alt mr-2"></i>Login

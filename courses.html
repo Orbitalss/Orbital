@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="icon" type="image/png" href="https://i.imgur.com/7QBJk3z.png" />
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Orbital Education Foundation - Courses</title>
@@ -80,13 +78,18 @@
     </header>
 
     <!-- Hero Section -->
-    <section class="bg-blue-600 text-white text-center py-16">
-        <div class="container mx-auto px-4">
-            <h2 class="text-4xl font-extrabold italic mb-4">Our Courses</h2>
+    <section
+  class="text-white text-center py-16 bg-cover bg-center relative"
+  style="background-image: url('https://i.imgur.com/LJUdrIQ.png');"
+>
+  <div class="absolute inset-0 bg-black bg-opacity-40"></div>
 
-            <p class="text-xl text-blue-100">Quality education for your academic success</p>
-        </div>
-    </section>
+  <div class="container mx-auto px-4 relative z-10">
+    <h2 class="text-4xl font-extrabold italic mb-4">Our Courses</h2>
+    <p class="text-xl text-blue-100">Quality education for your academic success</p>
+  </div>
+</section>
+
 
     <!-- Courses Section -->
     <section class="container mx-auto px-4 py-12">
@@ -141,27 +144,9 @@
                     <h3 class="text-2xl font-semibold mb-6">Bridge Courses</h3>
                     <button class="mb-4 bg-gray-600 text-white px-4 py-2 rounded admin-only" onclick="openModal('addCourseModal')">Add Course</button>
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <div class="course-card bg-white p-6 rounded-lg shadow">
-                            <img src="https://via.placeholder.com/300x200?text=Physics" alt="Physics Bridge Course">
-                            <h4 class="text-xl font-semibold mt-4">Physics Bridge Course</h4>
-                            <p class="text-gray-600">Master fundamental physics concepts with our intensive bridge program. Perfect for students transitioning to advanced studies in engineering or physical sciences.</p>
-                            <p class="mt-2 text-blue-600">3 Months</p>
-                            <a href="#" class="text-blue-600 hover:underline">Details</a>
-                        </div>
-                        <div class="course-card bg-white p-6 rounded-lg shadow">
-                            <img src="https://via.placeholder.com/300x200?text=Biology" alt="Biology Bridge Course">
-                            <h4 class="text-xl font-semibold mt-4">Biology Bridge Course</h4>
-                            <p class="text-gray-600">Comprehensive coverage of cellular biology, genetics, and microbiology with hands-on lab sessions. Ideal for pre-med and life science students.</p>
-                            <p class="mt-2 text-blue-600">3 Months</p>
-                            <a href="#" class="text-blue-600 hover:underline">Details</a>
-                        </div>
-                        <div class="course-card bg-white p-6 rounded-lg shadow">
-                            <img src="https://via.placeholder.com/300x200?text=Mathematics" alt="Mathematics Bridge Course">
-                            <h4 class="text-xl font-semibold mt-4">Mathematics Bridge Course</h4>
-                            <p class="text-gray-600">Strengthen your mathematical foundation with advanced algebra, calculus, and statistics. Essential for engineering and computer science aspirants.</p>
-                            <p class="mt-2 text-blue-600">3 Months</p>
-                            <a href="#" class="text-blue-600 hover:underline">Details</a>
-                        </div>
+                        
+                        
+                       
                         <div class="course-card bg-white p-6 rounded-lg shadow">
                             <img src="https://via.placeholder.com/300x200?text=A-Level" alt="Advanced A-Level Course">
                             <h4 class="text-xl font-semibold mt-4">Advanced A-Level Course</h4>
@@ -177,20 +162,8 @@
                     <h3 class="text-2xl font-semibold mb-6">CTEVT Preparation Courses</h3>
                     <button class="mb-4 bg-blue-600 text-white px-4 py-2 rounded admin-only" onclick="openModal('addCourseModal')">Add Course</button>
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <div class="course-card bg-white p-6 rounded-lg shadow">
-                            <img src="https://via.placeholder.com/300x200?text=Engineering" alt="Engineering Entrance Prep">
-                            <h4 class="text-xl font-semibold mt-4">Engineering Entrance Prep</h4>
-                            <p class="text-gray-600">Comprehensive preparation covering physics, chemistry, and mathematics for CTEVT engineering entrance exams with mock tests and expert guidance.</p>
-                            <p class="mt-2 text-blue-600">2 Months</p>
-                            <a href="#" class="text-blue-600 hover:underline">Details</a>
-                        </div>
-                        <div class="course-card bg-white p-6 rounded-lg shadow">
-                            <img src="https://via.placeholder.com/300x200?text=Health" alt="Health Science Prep">
-                            <h4 class="text-xl font-semibold mt-4">Health Science Prep</h4>
-                            <p class="text-gray-600">Specialized course for health science programs under CTEVT, covering biology, chemistry, and health science fundamentals.</p>
-                            <p class="mt-2 text-blue-600">2 Months</p>
-                            <a href="#" class="text-blue-600 hover:underline">Details</a>
-                        </div>
+                        
+                        
                         <div class="course-card bg-white p-6 rounded-lg shadow">
                             <img src="https://via.placeholder.com/300x200?text=Advanced+CTEVT" alt="Advanced CTEVT Prep">
                             <h4 class="text-xl font-semibold mt-4">Advanced CTEVT Prep</h4>

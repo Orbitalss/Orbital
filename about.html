@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Orbital Education Foundation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+        
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            opacity: 0.7;
+        }
+        
+        .course-card {
+            transition: all 0.3s ease;
+        }
+        
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 50;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+        
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 800px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .close:hover {
+            color: black;
+        }
+        
+        .chart-container {
+            height: 300px;
+            width: 100%;
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #3b82f6;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .active-nav::after {
+            width: 100%;
+        }
+        
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Video Background -->
+    <div class="relative h-screen overflow-hidden">
+        <video autoplay muted loop class="hero-video">
+            <source src="https://assets.mixkit.co/videos/preview/mixkit-tree-with-yellow-flowers-1173-large.mp4" type="video/mp4">
+        </video>
+        <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+        
+        <!-- Navigation -->
+        <nav class="fixed top-0 left-0 right-0 bg-white bg-opacity-90 shadow-md z-40">
+            <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+                <div class="flex items-center">
+                    <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-3">
+                        <img src="https://i.imgur.com/YYRny8m.png" alt="Logo" class="w-8 h-8 object-contain" />
+                    </div>
+                    
+                    <span class="text-xl font-bold text-blue-800">Orbital</span>
+                </div>
+                
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="nav-link text-gray-800 font-medium">Home</a>
+                    <a href="about.html" class="nav-link active-nav text-gray-800 font-medium">About Us</a>
+                    <a href="courses.html" class="nav-link text-gray-800 font-medium">Courses</a>
+                    <a href="study-abroad.html" class="nav-link text-gray-800 font-medium">Study Abroad</a>
+                    <a href="contact.html" class="nav-link text-gray-800 font-medium">Contact</a>
+                    <button id="loginBtn" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition">
+                        <i class="fas fa-sign-in-alt mr-2"></i>Login
+                    </button>
+                </div>
+                
+                <button id="mobileMenuBtn" class="md:hidden text-gray-800">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div id="mobileMenu" class="hidden md:hidden bg-white py-2 px-4 shadow-lg">
+                <a href="index.html" class="block py-2 text-gray-800 font-medium">Home</a>
+                <a href="about.html" class="block py-2 text-gray-800 font-medium">About Us</a>
+                <a href="courses.html" class="block py-2 text-gray-800 font-medium">Courses</a>
+                <a href="study-abroad.html" class="block py-2 text-gray-800 font-medium">Study Abroad</a>
+                <a href="contact.html" class="block py-2 text-gray-800 font-medium">Contact</a>
+                <button id="mobileLoginBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md mt-2 transition">
+                    <i class="fas fa-sign-in-alt mr-2"></i>Login
+                </button>
+            </div>
+        </nav>
+        
+        <!-- Hero Section -->
+        <div class="h-full flex flex-col justify-center items-center text-center px-4 relative z-10">
+            <h1 class="text-5xl md:text-6xl font-bold text-white mb-4 animate__animated animate__fadeInDown">About Orbital</h1>
+            <p class="text-xl md:text-2xl text-blue-100 mb-8">"Orbiting Success Together."</p>
+            <a href="courses.html" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full text-lg font-medium transition transform hover:scale-105 shadow-lg">
+                Explore Our Courses <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+            
+            <div class="absolute bottom-10 left-0 right-0 flex justify-center">
+                <a href="#about-content" class="text-white animate-bounce">
+                    <i class="fas fa-chevron-down text-3xl"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- About Us Section -->
+    <section id="about-content" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-12">About Us</h2>
+            
+            <div class="max-w-4xl mx-auto">
+                <div class="bg-blue-50 rounded-xl p-8 mb-8 shadow-md">
+                    <p class="text-gray-700 mb-6">
+                        <span class="text-blue-600 font-bold">Orbital Education Foundation</span> is a premier institution based in Bag Bazar, Kathmandu, Nepal. We are committed to guiding students in their academic journey through bridge courses, entrance exam preparation, and study abroad consultation.
+                    </p>
+                    <p class="text-gray-700 mb-6">
+                        Our programs are built to help students excel in Nepal's toughest competitive exams and global language certifications. We believe in delivering focused, real-world training with modern tools, updated content, and expert instructors.
+                    </p>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-8 shadow-md">
+                        <h3 class="text-2xl font-bold text-blue-800 mb-4 flex items-center">
+                            <i class="fas fa-bullseye mr-3"></i> Our Mission
+                        </h3>
+                        <p class="text-gray-700">
+                            To empower learners with the knowledge, skills, and guidance to succeed in higher education and beyond.
+                        </p>
+                    </div>
+                    
+                    <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-8 shadow-md">
+                        <h3 class="text-2xl font-bold text-blue-800 mb-4 flex items-center">
+                            <i class="fas fa-eye mr-3"></i> Our Vision
+                        </h3>
+                        <p class="text-gray-700">
+                            To become Nepal's leading education platform for academic, professional, and international learning paths.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="mt-8 bg-white rounded-xl shadow-md p-8 border border-gray-100">
+                    <h3 class="text-2xl font-bold text-center text-gray-800 mb-6">Why Choose Us?</h3>
+                    
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-chalkboard-teacher text-blue-600 text-2xl"></i>
+                            </div>
+                            <h4 class="font-bold text-gray-800 mb-2">Expert Instructors</h4>
+                            <p class="text-gray-600 text-sm">Learn from industry professionals with years of experience</p>
+                        </div>
+                        
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-book-open text-blue-600 text-2xl"></i>
+                            </div>
+                            <h4 class="font-bold text-gray-800 mb-2">Updated Curriculum</h4>
+                            <p class="text-gray-600 text-sm">Courses designed with latest syllabus and exam patterns</p>
+                        </div>
+                        
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-globe-asia text-blue-600 text-2xl"></i>
+                            </div>
+                            <h4 class="font-bold text-gray-800 mb-2">Global Opportunities</h4>
+                            <p class="text-gray-600 text-sm">Pathways to study abroad in top destinations</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Orbital Education Foundation</h3>
+                    <p class="text-gray-400">"Education Foundation" - Providing quality education and guidance for academic and professional success.</p>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white transition">Home</a></li>
+                        <li><a href="about.html" class="text-gray-400 hover:text-white transition">About Us</a></li>
+                        <li><a href="courses.html" class="text-gray-400 hover:text-white transition">Courses</a></li>
+                        <li><a href="study-abroad.html" class="text-gray-400 hover:text-white transition">Study Abroad</a></li>
+                        <li><a href="contact.html" class="text-gray-400 hover:text-white transition">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold mb-4">Courses</h4>
+                    <ul class="space-y-2">
+                        <li><a href="courses.html" class="text-gray-400 hover:text-white transition">Bridge Courses</a></li>
+                        <li><a href="courses.html" class="text-gray-400 hover:text-white transition">Entrance Preparation</a></li>
+                        <li><a href="courses.html" class="text-gray-400 hover:text-white transition">Language Training</a></li>
+                        <li><a href="courses.html" class="text-gray-400 hover:text-white transition">Test Preparation</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold mb-4">Contact Info</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-2"></i>
+                            <span>Bag Bazar, Kathmandu, Nepal</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-phone-alt mt-1 mr-2"></i>
+                            <span>01-5348698 / 9841781818</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-envelope mt-1 mr-2"></i>
+                            <span>info@orbital.edu.np</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-8 pt-6 text-center text-gray-400">
+                <p>&copy; 2023 Orbital Education Foundation. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Include all the modal and script sections from your index.html here -->
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <!-- ... same as index.html ... -->
+    </div>
+    
+    <!-- Signup Modal -->
+    <div id="signupModal" class="modal">
+        <!-- ... same as index.html ... -->
+    </div>
+    
+    <!-- Course Details Modal -->
+    <div id="courseModal" class="modal">
+        <!-- ... same as index.html ... -->
+    </div>
+    
+    <!-- Add Course Modal (Admin Only) -->
+    <div id="addCourseModal" class="modal">
+        <!-- ... same as index.html ... -->
+    </div>
+    
+    <!-- Admin Dashboard Modal -->
+    <div id="adminDashboard" class="modal">
+        <!-- ... same as index.html ... -->
+    </div>
+    
+    <!-- Add Student Modal -->
+    <div id="addStudentModal" class="modal">
+        <!-- ... same as index.html ... -->
+    </div>
+    
+    <!-- Success Toast -->
+    <div id="successToast" class="fixed bottom-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg hidden">
+        <!-- ... same as index.html ... -->
+    </div>
+    
+    <!-- Error Toast -->
+    <div id="errorToast" class="fixed bottom-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg hidden">
+        <!-- ... same as index.html ... -->
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // ... same JavaScript as index.html ...
+    </script>
+</body>
+</html>

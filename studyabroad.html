@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Abroad - Orbital Education Foundation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+        
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            opacity: 0.7;
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #3b82f6;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .active-nav::after {
+            width: 100%;
+        }
+        
+        .country-card {
+            transition: all 0.3s ease;
+        }
+        
+        .country-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Video Background -->
+    <div class="relative h-screen overflow-hidden">
+        <video autoplay muted loop class="hero-video">
+            <source src="https://assets.mixkit.co/videos/preview/mixkit-tree-with-yellow-flowers-1173-large.mp4" type="video/mp4">
+        </video>
+        <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+        
+        <!-- Navigation -->
+        <nav class="fixed top-0 left-0 right-0 bg-white bg-opacity-90 shadow-md z-40">
+            <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+                <div class="flex items-center">
+                    <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-3">
+                        <img src="https://i.imgur.com/YYRny8m.png" alt="Logo" class="w-8 h-8 object-contain" />
+                    </div>
+                    
+                    <span class="text-xl font-bold text-blue-800">Orbital</span>
+                </div>
+                
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="nav-link text-gray-800 font-medium">Home</a>
+                    <a href="about.html" class="nav-link text-gray-800 font-medium">About Us</a>
+                    <a href="courses.html" class="nav-link text-gray-800 font-medium">Courses</a>
+                    <a href="study-abroad.html" class="nav-link active-nav text-gray-800 font-medium">Study Abroad</a>
+                    <a href="contact.html" class="nav-link text-gray-800 font-medium">Contact</a>
+                    <button id="loginBtn" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition">
+                        <i class="fas fa-sign-in-alt mr-2"></i>Login
+                    </button>
+                </div>
+                
+                <button id="mobileMenuBtn" class="md:hidden text-gray-800">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div id="mobileMenu" class="hidden md:hidden bg-white py-2 px-4 shadow-lg">
+                <a href="index.html" class="block py-2 text-gray-800 font-medium">Home</a>
+                <a href="about.html" class="block py-2 text-gray-800 font-medium">About Us</a>
+                <a href="courses.html" class="block py-2 text-gray-800 font-medium">Courses</a>
+                <a href="study-abroad.html" class="block py-2 text-gray-800 font-medium">Study Abroad</a>
+                <a href="contact.html" class="block py-2 text-gray-800 font-medium">Contact</a>
+                <button id="mobileLoginBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md mt-2 transition">
+                    <i class="fas fa-sign-in-alt mr-2"></i>Login
+                </button>
+            </div>
+        </nav>
+        
+        <!-- Hero Section -->
+        <div class="h-full flex flex-col justify-center items-center text-center px-4 relative z-10">
+            <h1 class="text-5xl md:text-6xl font-bold text-white mb-4">Study Abroad Opportunities</h1>
+            <p class="text-xl md:text-2xl text-blue-100 mb-8">Expand your horizons with international education</p>
+            <a href="#destinations" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full text-lg font-medium transition transform hover:scale-105 shadow-lg">
+                Explore Destinations <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+            
+            <div class="absolute bottom-10 left-0 right-0 flex justify-center">
+                <a href="#destinations" class="text-white animate-bounce">
+                    <i class="fas fa-chevron-down text-3xl"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Destinations Section -->
+    <section id="destinations" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-12">Popular Study Destinations</h2>
+            
+            <div class="max-w-6xl mx-auto">
+                <div class="grid md:grid-cols-3 gap-8">
+                    <!-- South Korea -->
+                    <div class="country-card bg-blue-50 rounded-xl p-6 shadow-md border border-blue-100">
+                        <div class="flex items-center mb-4">
+                            <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-flag text-blue-600"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-800">South Korea</h3>
+                        </div>
+                        <ul class="space-y-3 mb-6">
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>World-class universities</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>Scholarship opportunities</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>Strong STEM programs</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>Cultural exchange programs</span>
+                            </li>
+                        </ul>
+                        <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md transition">
+                            Learn More
+                        </button>
+                    </div>
+                    
+                    <!-- Japan -->
+                    <div class="country-card bg-red-50 rounded-xl p-6 shadow-md border border-red-100">
+                        <div class="flex items-center mb-4">
+                            <div class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-flag text-red-600"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-800">Japan</h3>
+                        </div>
+                        <ul class="space-y-3 mb-6">
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>Advanced technology programs</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>MEXT scholarships</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>Work-study opportunities</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>Rich cultural heritage</span>
+                            </li>
+                        </ul>
+                        <button class="w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded-md transition">
+                            Learn More
+                        </button>
+                    </div>
+                    
+                    <!-- Canada -->
+                    <div class="country-card bg-green-50 rounded-xl p-6 shadow-md border border-green-100">
+                        <div class="flex items-center mb-4">
+                            <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-flag text-green-600"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-800">Canada</h3>
+                        </div>
+                        <ul class="space-y-3 mb-6">
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>High-quality education</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>Post-study work options</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>Multicultural environment</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>Permanent residency pathways</span>
+                            </li>
+                        </ul>
+                        <button class="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-md transition">
+                            Learn More
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="mt-12 bg-white rounded-xl shadow-md p-8">
+                    <h3 class="text-2xl font-bold text-center text-gray-800 mb-6">Our Study Abroad Process</h3>
+                    
+                    <div class="grid md:grid-cols-4 gap-6">
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <span class="text-blue-600 font-bold text-xl">1</span>
+                            </div>
+                            <h4 class="font-bold text-gray-800 mb-2">Counseling</h4>
+                            <p class="text-gray-600 text-sm">Personalized guidance to choose the right country and program</p>
+                        </div>
+                        
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <span class="text-blue-600 font-bold text-xl">2</span>
+                            </div>
+                            <h4 class="font-bold text-gray-800 mb-2">Test Prep</h4>
+                            <p class="text-gray-600 text-sm">Language training and entrance exam preparation</p>
+                        </div>
+                        
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <span class="text-blue-600 font-bold text-xl">3</span>
+                            </div>
+                            <h4 class="font-bold text-gray-800 mb-2">Application</h4>
+                            <p class="text-gray-600 text-sm">Document preparation and university application</p>
+                        </div>
+                        
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <span class="text-blue-600 font-bold text-xl">4</span>
+                            </div>
+                            <h4 class="font-bold text-gray-800 mb-2">Visa & Departure</h4>
+                            <p class="text-gray-600 text-sm">Visa processing and pre-departure orientation</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-12 bg-blue-50 rounded-xl shadow-md p-8">
+                    <h3 class="text-2xl font-bold text-center text-gray-800 mb-6">Why Study Abroad?</h3>
+                    
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <div class="bg-white p-4 rounded-lg shadow border border-gray-200">
+                            <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+                                <i class="fas fa-globe text-blue-600"></i>
+                            </div>
+                            <h4 class="font-bold text-gray-800 mb-2">Global Exposure</h4>
+                            <p class="text-gray-600 text-sm">Experience different cultures and broaden your perspective</p>
+                        </div>
+                        
+                        <div class="bg-white p-4 rounded-lg shadow border border-gray-200">
+                            <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+                                <i class="fas fa-graduation-cap text-blue-600"></i>
+                            </div>
+                            <h4 class="font-bold text-gray-800 mb-2">Quality Education</h4>
+                            <p class="text-gray-600 text-sm">Access to world-class institutions and cutting-edge research</p>
+                        </div>
+                        
+                        <div class="bg-white p-4 rounded-lg shadow border border-gray-200">
+                            <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+                                <i class="fas fa-briefcase text-blue-600"></i>
+                            </div>
+                            <h4 class="font-bold text-gray-800 mb-2">Career Opportunities</h4>
+                            <p class="text-gray-600 text-sm">Enhance your employability with international experience</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Testimonials Section -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-12">Student Testimonials</h2>
+            
+            <div class="max-w-6xl mx-auto">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Testimonial 1 -->
+                    <div class="bg-white p-6 rounded-xl shadow-md">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4">
+                                <i class="fas fa-user text-blue-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-800">Ramesh Shrestha</h4>
+                                <p class="text-gray-600 text-sm">Studying in South Korea</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-700">"Orbital helped me navigate the complex process of applying to Korean universities. Their language training and documentation support were invaluable in securing my scholarship."</p>
+                        <div class="mt-4 text-yellow-400">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    
+                    <!-- Testimonial 2 -->
+                    <div class="bg-white p-6 rounded-xl shadow-md">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4">
+                                <i class="fas fa-user text-blue-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-800">Priya Gurung</h4>
+                                <p class="text-gray-600 text-sm">Studying in Japan</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-700">"The team at Orbital made my dream of studying in Japan come true. Their JLPT preparation course and university matching service were exactly what I needed."</p>
+                        <div class="mt-4 text-yellow-400">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-8 text-center">
+                    <a href="contact.html" class="inline-block bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full text-lg font-medium transition transform hover:scale-105 shadow-lg">
+                        Start Your Journey <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Orbital Education Foundation</h3>
+                    <p class="text-gray-400">"Orbiting Success Together." - Providing quality education and guidance for academic and professional success.</p>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white transition">Home</a></li>
+                        <li><a href="about.html" class="text-gray-400 hover:text-white transition">About Us</a></li>
+                        <li><a href="courses.html" class="text-gray-400 hover:text-white transition">Courses</a></li>
+                        <li><a href="study-abroad.html" class="text-gray-400 hover:text-white transition">Study Abroad</a></li>
+                        <li><a href="contact.html" class="text-gray-400 hover:text-white transition">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold mb-4">Study Abroad</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">South Korea</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Japan</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Canada</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Australia</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold mb-4">Contact Info</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-2"></i>
+                            <span>Bag Bazar, Kathmandu, Nepal</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-phone-alt mt-1 mr-2"></i>
+                            <span>01-5348698 / 9841781818</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-envelope mt-1 mr-2"></i>
+                            <span>info@orbital.edu.np</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-8 pt-6 text-center text-gray-400">
+                <p>&copy; 2023 Orbital Education Foundation. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
+</body>
+</html>

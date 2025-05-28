@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="icon" type="image/png" href="https://i.imgur.com/7QBJk3z.png" />
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Us - Orbital Education Foundation</title>
@@ -61,11 +59,20 @@
     </style>
 </head>
 <body class="bg-gray-50">
-    <!-- Video Background -->
-    <div class="relative h-screen overflow-hidden">
-        <video autoplay muted loop class="hero-video">
-            <source src="https://assets.mixkit.co/videos/preview/mixkit-tree-with-yellow-flowers-1173-large.mp4" type="video/mp4">
-        </video>
+    <!-- Static Image Background -->
+<div class="relative h-screen overflow-hidden bg-cover bg-center" style="background-image: url('https://i.imgur.com/Q9eV51Q.jpeg');">
+    <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+    
+    <!-- Hero Content -->
+    <div class="h-full flex flex-col justify-center items-center text-center px-4 relative z-10">
+        <h1 class="text-5xl md:text-6xl font-bold text-white mb-4">Contact Us</h1>
+        <p class="text-xl md:text-2xl text-blue-100 mb-8">We'd love to hear from you</p>
+        <a href="#contact-form" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full text-lg font-medium transition transform hover:scale-105 shadow-lg">
+            Get in Touch <i class="fas fa-arrow-right ml-2"></i>
+        </a>
+    </div>
+</div>
+
         <div class="absolute inset-0 bg-black bg-opacity-40"></div>
         
         <!-- Navigation -->
